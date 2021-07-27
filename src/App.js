@@ -1,6 +1,9 @@
+import { getDefaultNormalizer } from "@testing-library/react";
 import { React, Component, cloneElement } from "react";
 import "./App.css";
+import "./index.css";
 import { CardList } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -17,6 +20,10 @@ class App extends Component {
     this.setState({ monsters: data });
   }
 
+  handleChange = (e) => {
+    this.setState({ searchField: e.target.value });
+  };
+
   render() {
     const { monsters, searchField } = this.state;
     const filteredMonsters = monsters.filter((monster) =>
@@ -25,9 +32,11 @@ class App extends Component {
     console.log(filteredMonsters);
     return (
       <div className="App">
-        <form>
-          <input type="search" placeholder="Search monster" onChange={(e) => this.setState({ searchField: e.target.value })}></input>
-        </form>
+        <h1>Monsters Rodolex</h1>
+        <SearchBox
+          placeholer="Search monsters"
+          handleChange={this.handleChange}
+        ></SearchBox>
         <CardList monsters={filteredMonsters}></CardList>
       </div>
     );
